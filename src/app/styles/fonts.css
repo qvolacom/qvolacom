@@ -1,0 +1,11 @@
+/* styles/fonts.css */
+@font-face {
+  font-family: 'Good Times';
+  src: url('../../../public/fonts/GoodTimes.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*{
+  font-family: 'Good Times';
+}
