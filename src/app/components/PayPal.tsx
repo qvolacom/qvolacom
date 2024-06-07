@@ -10,9 +10,9 @@ const initialOptions = {
 
 export default function Home() {
   return (
-    <div className="bg-slate-800 w-full h-screen flex justify-center items-center">
-      <div className="text-gray-300 mb-4">Pagos</div>
-      <div>
+    <div className="w-full h-screen justify-center items-center">
+      <div className="text-[#ffffff] mb-4 text-center text-2xl mt-[5rem] w-full bg-[#FB823B]">Payment</div>
+      <div className="">
         <PayPalScriptProvider
           options={initialOptions}
         >

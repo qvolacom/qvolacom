@@ -2,22 +2,10 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import { useEffect } from 'react';
+import { useEffect } from 'react'; 
+import '../product/refreshproduct'
+
 export default function Home() {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <main>
         <NavBar></NavBar>
