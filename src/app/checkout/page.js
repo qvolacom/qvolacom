@@ -6,7 +6,7 @@ import '../styles/fonts.css'
 export default function Home() {
 
     return (
-        <main className="">
+        <main>
             <PayPal></PayPal>
         </main>
     );

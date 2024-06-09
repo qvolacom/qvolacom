@@ -3,9 +3,9 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import { useEffect } from 'react'; 
-import '../product/refreshproduct'
 
 export default function Home() {
+  
   return (
     <main>
         <NavBar></NavBar>
@@ -95,9 +95,9 @@ export default function Home() {
             <button id="buy-btn" className="bg-[#FB823B] hover:bg-[#fa955a] scale-90 hover:scale-95 duration-100 text-white min-[320px]:w-[150px] xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:py-1 min-[320px]:justify-center min-[320px]:text-[20px] xl:text-base md:text-xs rounded-md flex min-[320px]:mx-auto md:mx-auto xl:mx-0">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"
                     className="xl:w-4 xl:h-4 md:w-[0.7rem] md:h-[0.7rem] min-[320px]:w-[1rem] min-[320px]:h-[32px] my-auto mr-1">
-                <path fill-rule="evenodd"
+                <path fillRule="evenodd"
                   d="M6 5v1H4.667a1.75 1.75 0 0 0-1.743 1.598l-.826 9.5A1.75 1.75 0 0 0 3.84 19H16.16a1.75 1.75 0 0 0 1.743-1.902l-.826-9.5A1.75 1.75 0 0 0 15.333 6H14V5a4 4 0 0 0-8 0Zm4-2.5A2.5 2.5 0 0 0 7.5 5v1h5V5A2.5 2.5 0 0 0 10 2.5ZM7.5 10a2.5 2.5 0 0 0 5 0V8.75a.75.75 0 0 1 1.5 0V10a4 4 0 0 1-8 0V8.75a.75.75 0 0 1 1.5 0V10Z"
-                  clip-rule="evenodd"/>
+                  clipRule="evenodd"/>
                 </svg>
                 Buy
             </button>

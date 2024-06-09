@@ -11,12 +11,12 @@ const initialOptions = {
 export default function Home() {
   return (
     <div className="w-full h-screen justify-center items-center">
-      <div className="text-[#ffffff] mb-4 text-center text-2xl mt-[5rem] w-full bg-[#FB823B]">Payment</div>
-      <div className="">
+      <div className="text-[#ffffff] mb-4 text-center text-6xl mt-[5rem] w-full bg-[#FB823B]">Payment</div>
+      <div className="flex flex-wrap justify-center items-center h-full">
         <PayPalScriptProvider
           options={initialOptions}
         >
-          <PayPalButtons
+          <PayPalButtons className="justify-center mx-auto w-[300px]"
             style={{ layout: "vertical", color: 'gold' }}
 
           />

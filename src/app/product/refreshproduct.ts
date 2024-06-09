@@ -20,6 +20,7 @@ type CartItem = {
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id') as string;
 const url = `http://localhost:5000/api/products/${id}`;
+console.log(url + "    ID:" + id);
 
 // Nombre de la clave en localStorage
 const localStorageKey = 'ProductsList';
@@ -38,11 +39,17 @@ async function fetchProductData(id: string): Promise<ProductData | undefined> {
     const url = getProductUrl(id);
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log("Datos obtenidos:", data);
 
         // Extraer los datos necesarios
         const title = data.title;
@@ -73,6 +80,8 @@ function updateUI(data: ProductData, id: string): void {
         document.getElementById('price')!.textContent = `${data.price}$`;
         document.getElementById('id')!.textContent = id;
         document.getElementById('image')!.setAttribute('src', data.image);
+    } else {
+        console.error("No se pudo actualizar la UI: Datos de producto indefinidos");
     }
 }
 
