@@ -1,5 +1,5 @@
 import React from "react";
-import isologo from '../../../public/images/isologo.png';
+import isologo from "../../public/images/isologo.png";
 import Image from 'next/image';
 
 const Footer: React.FC = () => {

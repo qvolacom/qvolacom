@@ -19,7 +19,7 @@ type CartItem = {
 // Extraer los parámetros de la URL
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id') as string;
-const url = `http://localhost:5000/api/products/${id}`;
+const url = process.env.NEXT_PUBLIC_API_URL + `products/${id}`;
 console.log(url + "    ID:" + id);
 
 // Nombre de la clave en localStorage

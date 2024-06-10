@@ -1,7 +1,7 @@
 "use client"
 import { initializeContactForm } from "../contact/code";
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
+import NavBar from '../../components/NavBar';
+import Footer from '../../components/Footer';
 import React, { useState, useEffect } from 'react';
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const url = "http://localhost:5000/api/forms/customer/contact-us";
+        const url = process.env.NEXT_PUBLIC_API_URL + "form/customer/contact-us";
 
         const data = {
             email: email,

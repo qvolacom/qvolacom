@@ -40,3 +40,22 @@ body {
   }
 }
 
+/* Agrega esto a tu archivo CSS */
+@keyframes slideInDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slideInDown {
+  animation: slideInDown 0.5s forwards;
+}
+
+.fixed-nav {
+  transition: all 0.3s ease;
+}
+
+

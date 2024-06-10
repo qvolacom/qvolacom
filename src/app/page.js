@@ -1,8 +1,8 @@
 import '../app/styles/fonts.css'
-import NavBar from '../app/components/NavBar';
-import Footer from './components/Footer';
-import CategoryLayout from './layouts/CategoryLayout';
-import Slider from '../app/components/Slider'
+import NavBar from '../components/NavBar'
+import Footer from '../components/Footer';
+import CategoryLayout from '../app/layouts/CategoryLayout';
+import Slider from '../components/Slider'
 
 export default function Home() {
   return (

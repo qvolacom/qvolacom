@@ -1,10 +1,10 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import CardProduct from "../components/CardProduct";
+import CardProduct from "../../components/CardProduct";
 
 const ProductLayout: React.FC<{ title?: string }> = ({ title }) => {
   const [elements, setElements] = useState<any[]>([]);
-  const apiUrl = "http://localhost:5000/api/products/all";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL + "products/all";
 
   useEffect(() => {
     const fetchData = async () => {

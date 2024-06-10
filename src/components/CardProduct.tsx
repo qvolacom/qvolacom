@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/fonts.css'
+import '../app/styles/fonts.css'
 
 interface CardProps {
   title?: string;
@@ -21,6 +21,8 @@ const Card: React.FC<CardProps> = ({ title, description, linkedto, image, price,
         className="card-img w-full sm:h-56 min-[320px]:h-32 object-containt shadow"
         src={image}
         alt="Card Image"
+        width={'auto'}
+        height={'auto'}
       />
 
       {/* Card Description Section */}

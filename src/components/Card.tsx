@@ -16,11 +16,11 @@ const Card: React.FC<CardProps> = ({ id, title, description, linkedto, image }) 
     >
       {/* Card Image Section */}
       <img
-        className="card-img w-full sm:h-56 min-[320px]:h-32 object-contain shadow"
+        className="card-img w-full sm:h-56 min-[320px]:h-32 object-containt shadow"
         src={image}
         alt="Card Image"
-        width={100}
-        height={100}
+        width={'auto'}
+        height={'auto'}
       />
 
       {/* Card Description Section */}
