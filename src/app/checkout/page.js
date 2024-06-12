@@ -7,7 +7,7 @@ export default function Home() {
 
     return (
         <main>
-            <PayPal></PayPal>
+            <PayPal totalValue="" ></PayPal>
         </main>
     );
 };

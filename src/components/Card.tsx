@@ -48,31 +48,30 @@ const Card: React.FC<CardProps> = ({ id, title, description, linkedto, image }) 
 
       {/* Card Button Section */}
       <div className="justify-center flex pb-2 min-[320px]:mt-2 md:mt-[-10px]">
-        <button
-          className="flex-row justify-center text-white cursor-pointer bg-[#FB823B] focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-95 scale-90 gap-x-2 opacity-90 hover:opacity-100"
+      <a
+        href={linkedto} className="flex flex-row justify-center text-white cursor-pointer bg-[#FB823B] focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg px-5 py-2.5 text-center items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-95 scale-90 gap-x-2 opacity-90 hover:opacity-100">
+        {/* Bigger Screens Button Text */}
+        <span className="min-[320px]:hidden sm:inline bigLinkCAT">
+          Explore
+        </span>
+
+        {/* Mobile Button Text */}
+        <span className="sm:hidden min-[320px]:inline text-[12px] text-center smallLinkCAT">
+          Explore
+        </span>
+
+        {/* Button Icon */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="sm:size-6 min-[320px]:size-4"
         >
-          {/* Bigger Screens Button Text */}
-          <a className="min-[320px]:hidden sm:inline bigLinkCAT" href={linkedto}>
-            Explore
-          </a>
-
-          {/* Mobile Button Text */}
-          <a className="sm:hidden min-[320px]:inline text-[12px] text-center smallLinkCAT" href={linkedto}>
-            Explore
-          </a>
-
-          {/* Button Icon */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="sm:w-6 sm:h-6 min-[320px]:w-3 min-[320px]:h-5"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-          </svg>
-        </button>
+          <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        </svg>
+      </a>
       </div>
     </section>
   );

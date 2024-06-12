@@ -58,31 +58,33 @@ const Card: React.FC<CardProps> = ({ title, description, linkedto, image, price,
 
       {/* Card Button Section */}
       <div className="justify-center flex pb-2">
-        <button
-          className="flex-row justify-center text-white cursor-pointer bg-[#FB823B] focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-95 scale-90 gap-x-2 opacity-90 hover:opacity-100"
+      <a
+        href={`/product/${encodeURIComponent(sku || '')}`}
+        className="flex flex-row justify-center text-white cursor-pointer bg-[#FB823B] focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg px-5 py-2.5 text-center items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-95 scale-90 gap-x-2 opacity-90 hover:opacity-100"
+      >
+        {/* Bigger Screens Button Text */}
+        <span id="btn-standart" className="min-[320px]:hidden sm:inline bigLink">
+          Explore
+        </span>
+
+        {/* Mobile Button Text */}
+        <span id="btn-small" className="sm:hidden min-[320px]:inline text-xs text-center smallLink">
+          Explore
+        </span>
+
+        {/* Button Icon */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="sm:size-6 min-[320px]:size-4"
         >
-          {/* Bigger Screens Button Text */}
-          <a id="btn-standart" className="min-[320px]:hidden sm:inline bigLink" href={`/product?id=${encodeURIComponent(sku || '')}`}>
-            Explore
-          </a>
+          <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        </svg>
+      </a>
 
-          {/* Mobile Button Text */}
-          <a id="btn-small" className="sm:hidden min-[320px]:inline text-xs text-center smallLink" href={`/product?id=${encodeURIComponent(sku || '')}`}>
-            Explore
-          </a>
-
-          {/* Button Icon */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="sm:w-6 sm:h-6 min-[320px]:w-3 min-[320px]:h-5"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-          </svg>
-        </button>
       </div>
     </section>
   );

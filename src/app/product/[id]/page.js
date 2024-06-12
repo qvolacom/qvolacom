@@ -1,19 +1,22 @@
 "use client"
 import React from 'react';
-import NavBar from '../../components/NavBar';
-import Footer from '../../components/Footer';
+import NavBar from '../../../components/NavBar';
+import Footer from '../../../components/Footer';
 import { useEffect, useState } from 'react'; 
+import ModalAlert from '../../../components/ModalAlert';
 
-export default function Home() {
+export default function Home({params}) {
   
 
   // Extraer los parámetros de la URL
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const id = params.id;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL + `products/${id}`;
   const [productData, setProductData] = useState(null);
   const [selectedSize, setSelectedSize] = useState('');
+  const [totalItems, setTotalItems] = useState(0);
+  const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState(null);
+  const [messageAlert, setMessageAlert] = useState('');
 
 
   useEffect(() => {
@@ -46,10 +49,15 @@ export default function Home() {
   }, []);
 
 
-  // Función para agregar un producto al carrito
-  const addToCart = () => {
+  const handleClose = () => {
+    setShowAlert(false);
+  };
+
+  const buyProduct = () => {
+  
     if (!selectedSize) {
-      alert('Por favor, seleccione un tamaño antes de agregar al carrito.');
+      setMessageAlert("Please select a size for the product before proceeding.");
+      setShowAlert(true);
       return;
     }
   
@@ -71,7 +79,53 @@ export default function Home() {
     }, 0);
   
     if (existingStock >= availableStock) {
-      alert(`El stock para el producto con SKU ${productData.sku} ya está agotado.`);
+      setMessageAlert("Sorry, you've reached the maximum quantity available for this product. If you'd like to purchase it now, you can proceed directly to the 'Buy Now' button in your shopping cart.");
+      setShowAlert(true);
+      return;
+    }
+  
+    if (existingProductIndex !== -1) {
+      // Si el producto ya está en el carrito con el mismo tamaño, aumenta la cantidad y el precio total
+      cart[existingProductIndex].quantity += 1;
+      cart[existingProductIndex].totalPrice += productData.price;
+    } else {
+      // Si el producto no está en el carrito o tiene un tamaño diferente, agrégalo al carrito
+      cart.push({ ...productData, size: selectedSize, quantity: 1, totalPrice: productData.price });
+    }
+  
+    // Actualiza el carrito en localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.location.href = "/checkout"
+  }
+
+  // Función para agregar un producto al carrito
+  const addToCart = () => {
+    if (!selectedSize) {
+      setMessageAlert("Please select a size for the product before proceeding.");
+      setShowAlert(true);;
+      return;
+    }
+  
+    // Verifica si hay productos en el carrito
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+    // Verifica si el producto ya está en el carrito
+    const existingProductIndex = cart.findIndex(item => item.sku === productData.sku && item.size === selectedSize);
+  
+    // Obtener el stock disponible para el SKU específico
+    const availableStock = productData.stock || 0;
+  
+    // Verificar si el SKU ya está en el carrito y si hay suficiente stock disponible
+    const existingStock = cart.reduce((acc, item) => {
+      if (item.sku === productData.sku) {
+        acc += item.quantity;
+      }
+      return acc;
+    }, 0);
+  
+    if (existingStock >= availableStock) {
+      setMessageAlert("Sorry, you've reached the maximum quantity available for this product. Please add another product or remove some items from your cart.");
+      setShowAlert(true);
       return;
     }
   
@@ -88,9 +142,6 @@ export default function Home() {
     localStorage.setItem('cart', JSON.stringify(cart));
   };
   
-  
-
-
 
   
   return (
@@ -108,12 +159,12 @@ export default function Home() {
     <div className="md:w-[65%] min-[320px]:w-[90%] min-[320px]:h-[900px] sm:h-fit md:min-w-90 sm:max-h-96 md:h-[600px] overflow-hidden lg:max-h-fit bg-slate-100 px-1 sm:block md:flex mx-auto my-auto mb-12 border md:space-x-2">
       {/* Image */}
       <div className="md:w-1/2 sm:w-full md:h-full sm:h-[200px] flex justify-center content-center mx-auto my-auto px-5 py-5">
-        <div className="md:h-full h-full bg-slate-700 md:flex sm:w-full justify-center">
+        <div className="md:h-full min-[320px]:h-[350px] h-full bg-slate-700 md:flex sm:w-full justify-center">
         {productData && (
           <>
           <img
             id="image"
-            className="object-cover w-full h-full min-[320px]:mi-h-[250px]"
+            className="object-cover w-full h-full min-[320px]:min-h-[250px]"
             src={productData.image}
             alt=""
           />
@@ -166,7 +217,7 @@ export default function Home() {
           </div>
 )}
           <div className="w-full 2xl:h-[180px] xl:h-[150px] lg:h-[120px] md:h-[80px] min-[320px]:h-[160px] 2xl:mt-2 xl:mt-2 lg:mt-2 md:mt-2 min-[320px]:mt-2 lg:flex lg:flex-wrap md:justify-center md:content-center min-[320px]:content-center min-[320px]:space-y-2 lg:space-x-2 xl:space-x-2 2xl:space-x-9 md:space-y-2 lg:space-y-2 xl:space-y-2 2xl:space-y-0 border-y-2 border-dashed">
-            <button id="buy-btn" className="bg-[#FB823B] hover:bg-[#fa955a] scale-90 hover:scale-95 duration-100 text-white min-[320px]:w-[150px] xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:py-1 min-[320px]:justify-center min-[320px]:text-[20px] xl:text-base md:text-xs rounded-md flex min-[320px]:mx-auto md:mx-auto xl:mx-0">
+            <button id="buy-btn" onClick={buyProduct} className="bg-[#FB823B] hover:bg-[#fa955a] scale-90 hover:scale-95 duration-100 text-white min-[320px]:w-[150px] xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:py-1 min-[320px]:justify-center min-[320px]:text-[20px] xl:text-base md:text-xs rounded-md flex min-[320px]:mx-auto md:mx-auto xl:mx-0">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"
                     className="xl:w-4 xl:h-4 md:w-[0.7rem] md:h-[0.7rem] min-[320px]:w-[1rem] min-[320px]:h-[32px] my-auto mr-1">
                 <path fillRule="evenodd"
@@ -194,6 +245,13 @@ export default function Home() {
             {/* More buttons */}
           </div>
         </div>
+      </div>
+    </div>
+
+    <div>
+      {showAlert && <ModalAlert message={messageAlert} onClose={handleClose} />}
+      <div className={showAlert ? 'pointer-events-none' : ''}>
+        {/* Aquí va el resto del contenido de tu aplicación */}
       </div>
     </div>
     <Footer></Footer>
