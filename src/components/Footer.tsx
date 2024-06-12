@@ -26,12 +26,6 @@ const Footer: React.FC = () => {
             </li>
             <li className="ml-9">
               <a href="/" className="hover:underline">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="32" viewBox="0 0 32 32">
-                  <rect x="1" y="4" width="30" height="24" rx="4" ry="4" fill="#fff"></rect>
-                  <path d="M1.638,5.846H30.362c-.711-1.108-1.947-1.846-3.362-1.846H5c-1.414,0-2.65,.738-3.362,1.846Z" fill="#a62842"></path>
-                  <path d="M2.03,7.692c-.008,.103-.03,.202-.03,.308v1.539H31v-1.539c0-.105-.022-.204-.03-.308H2.03Z" fill="#a62842"></path>
-                  {/* Agrega el resto de las partes del SVG */}
-                </svg>
               </a>
             </li>
           </ul>

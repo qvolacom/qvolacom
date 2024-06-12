@@ -7,7 +7,7 @@ import Head from 'next/head';
 
 export default function Home() {
   return (
-    <main title='Home'>
+    <main>
       <NavBar></NavBar>
       <Slider></Slider>
       <CategoryLayout></CategoryLayout>
