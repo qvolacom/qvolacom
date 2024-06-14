@@ -1,13 +1,17 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "../../components/Card";
+import { LanguageContext } from "../../context/LanguageContext";
 
 const CategoryLayout: React.FC<{ title?: string }> = ({ title }) => {
   const [elements, setElements] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL + "category/all";
 
+  const { language, toggleLanguage } = useContext(LanguageContext);
+
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         const response = await fetch(apiUrl);
@@ -95,9 +99,9 @@ const CategoryLayout: React.FC<{ title?: string }> = ({ title }) => {
 
   return (
     <section className="pt-12 pb-2 font-custom">
-      {title ? (
+      {language.startsWith('es') ? (
         <h1 className="category-title text-center font-semibold min-[320px]:text-xl md:text-3xl text-[#ffffff] uppercase shadow shadow-orange-700 bg-[#FB8238] py-1">
-          {title}
+          Categorias
         </h1>
       ) : (
         <h1 className="category-title text-center font-semibold min-[320px]:text-xl md:text-3xl text-[#ffffff] uppercase shadow shadow-orange-700 bg-[#FB8238] py-1">

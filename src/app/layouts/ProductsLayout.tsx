@@ -1,10 +1,13 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CardProduct from "../../components/CardProduct";
+import { LanguageContext } from "../../context/LanguageContext";
 
 const ProductLayout: React.FC<{ title?: string }> = ({ title }) => {
   const [elements, setElements] = useState<any[]>([]);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL + "products/all";
+
+  const { language, toggleLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,6 +17,8 @@ const ProductLayout: React.FC<{ title?: string }> = ({ title }) => {
           throw new Error("Error al obtener los datos");
         }
         const data = await response.json();
+        console.log(data)
+
         setElements(data);
       } catch (error) {
         console.error("Error:", error);
@@ -32,6 +37,8 @@ const ProductLayout: React.FC<{ title?: string }> = ({ title }) => {
     const prevButton = document.getElementById('prev-button');
     const nextButton = document.getElementById('next-button');
     const pageInfo = document.getElementById('page-info');
+
+    
 
     const renderItems = () => {
       items.forEach((item, index) => {
@@ -93,9 +100,9 @@ const ProductLayout: React.FC<{ title?: string }> = ({ title }) => {
 
   return (
     <section className="pt-12 pb-2">
-      {title ? (
+      {language.startsWith('es') ? (
         <h1 className="category-title text-center font-semibold min-[320px]:text-xl md:text-3xl text-[#ffffff] uppercase shadow-md bg-[#FB8238] py-1">
-          {title}
+          Productos
         </h1>
       ) : (
         <h1 className="category-title text-center font-semibold min-[320px]:text-xl md:text-3xl text-[#ffffff] uppercase shadow-md bg-[#FB8238] py-1">

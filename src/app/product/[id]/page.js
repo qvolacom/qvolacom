@@ -2,8 +2,9 @@
 import React from 'react';
 import NavBar from '../../../components/NavBar';
 import Footer from '../../../components/Footer';
-import { useEffect, useState } from 'react'; 
+import {useContext, useEffect, useState } from 'react'; 
 import ModalAlert from '../../../components/ModalAlert';
+import { LanguageContext } from '../../../context/LanguageContext';
 
 export default function Home({params}) {
   
@@ -17,9 +18,11 @@ export default function Home({params}) {
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState(null);
   const [messageAlert, setMessageAlert] = useState('');
+  const { language, toggleLanguage } = useContext(LanguageContext);
 
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         const response = await fetch(apiUrl);
@@ -56,7 +59,11 @@ export default function Home({params}) {
   const buyProduct = () => {
   
     if (!selectedSize) {
-      setMessageAlert("Please select a size for the product before proceeding.");
+      if (language.startsWith('es')){
+        setMessageAlert("Seleccione una talla para el producto antes de continuar.");
+      }else{
+        setMessageAlert("Please select a size for the product before proceeding.");
+      }
       setShowAlert(true);
       return;
     }
@@ -79,7 +86,12 @@ export default function Home({params}) {
     }, 0);
   
     if (existingStock >= availableStock) {
-      setMessageAlert("Sorry, you've reached the maximum quantity available for this product. If you'd like to purchase it now, you can proceed directly to the 'Buy Now' button in your shopping cart.");
+      if (language.startsWith('es')) {
+        setMessageAlert('Lo sentimos, has alcanzado la cantidad máxima disponible para este producto. Si desea comprarlo ahora, puede proceder directamente al botón "Comprar ahora" en su carrito de compras.');
+      }else{
+        setMessageAlert("Sorry, you've reached the maximum quantity available for this product. If you'd like to purchase it now, you can proceed directly to the 'Buy Now' button in your shopping cart.");
+      }
+      
       setShowAlert(true);
       return;
     }
@@ -101,8 +113,12 @@ export default function Home({params}) {
   // Función para agregar un producto al carrito
   const addToCart = () => {
     if (!selectedSize) {
-      setMessageAlert("Please select a size for the product before proceeding.");
-      setShowAlert(true);;
+      if (language.startsWith('es')){
+        setMessageAlert("Seleccione una talla para el producto antes de continuar.");
+      }else{
+        setMessageAlert("Please select a size for the product before proceeding.");
+      }
+      setShowAlert(true);
       return;
     }
   
@@ -124,7 +140,11 @@ export default function Home({params}) {
     }, 0);
   
     if (existingStock >= availableStock) {
-      setMessageAlert("Sorry, you've reached the maximum quantity available for this product. Please add another product or remove some items from your cart.");
+      if (language.startsWith('es')){
+        setMessageAlert("Lo sentimos, has alcanzado la cantidad máxima disponible para este producto. Agregue otro producto o elimine algunos artículos de su carrito.");
+      }else{
+        setMessageAlert("Sorry, you've reached the maximum quantity available for this product. Please add another product or remove some items from your cart.");
+      }
       setShowAlert(true);
       return;
     }
@@ -148,12 +168,16 @@ export default function Home({params}) {
     <main>
         <NavBar></NavBar>
         <section className="w-full mt-[2rem] h-auto">
-      <h1
-        id="big-title"
-        className="text-center font-semibold md:text-5xl min-[320px]:text-sm text-[#ffffff] uppercase shadow-md bg-[#FB823B] py-1 mb-9"
-      >
-        Product Details
-      </h1>
+        {language.startsWith('es') ? (
+          <>
+          <h1 id="big-title" className="text-center font-semibold md:text-5xl min-[320px]:text-sm text-[#ffffff] uppercase shadow-md bg-[#FB823B] py-1 mb-9">Detalles del Producto</h1>
+          </>
+        ):(
+          <>
+          <h1 id="big-title" className="text-center font-semibold md:text-5xl min-[320px]:text-sm text-[#ffffff] uppercase shadow-md bg-[#FB823B] py-1 mb-9">Product Details</h1>
+          </>
+        )}
+      
     </section>
 
     <div className="md:w-[65%] min-[320px]:w-[90%] min-[320px]:h-[900px] sm:h-fit md:min-w-90 sm:max-h-96 md:h-[600px] overflow-hidden lg:max-h-fit bg-slate-100 px-1 sm:block md:flex mx-auto my-auto mb-12 border md:space-x-2">
@@ -217,30 +241,63 @@ export default function Home({params}) {
           </div>
 )}
           <div className="w-full 2xl:h-[180px] xl:h-[150px] lg:h-[120px] md:h-[80px] min-[320px]:h-[160px] 2xl:mt-2 xl:mt-2 lg:mt-2 md:mt-2 min-[320px]:mt-2 lg:flex lg:flex-wrap md:justify-center md:content-center min-[320px]:content-center min-[320px]:space-y-2 lg:space-x-2 xl:space-x-2 2xl:space-x-9 md:space-y-2 lg:space-y-2 xl:space-y-2 2xl:space-y-0 border-y-2 border-dashed">
-            <button id="buy-btn" onClick={buyProduct} className="bg-[#FB823B] hover:bg-[#fa955a] scale-90 hover:scale-95 duration-100 text-white min-[320px]:w-[150px] xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:py-1 min-[320px]:justify-center min-[320px]:text-[20px] xl:text-base md:text-xs rounded-md flex min-[320px]:mx-auto md:mx-auto xl:mx-0">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"
-                    className="xl:w-4 xl:h-4 md:w-[0.7rem] md:h-[0.7rem] min-[320px]:w-[1rem] min-[320px]:h-[32px] my-auto mr-1">
-                <path fillRule="evenodd"
-                  d="M6 5v1H4.667a1.75 1.75 0 0 0-1.743 1.598l-.826 9.5A1.75 1.75 0 0 0 3.84 19H16.16a1.75 1.75 0 0 0 1.743-1.902l-.826-9.5A1.75 1.75 0 0 0 15.333 6H14V5a4 4 0 0 0-8 0Zm4-2.5A2.5 2.5 0 0 0 7.5 5v1h5V5A2.5 2.5 0 0 0 10 2.5ZM7.5 10a2.5 2.5 0 0 0 5 0V8.75a.75.75 0 0 1 1.5 0V10a4 4 0 0 1-8 0V8.75a.75.75 0 0 1 1.5 0V10Z"
-                  clipRule="evenodd"/>
-                </svg>
-                Buy
-            </button>
+            
+            {language.startsWith('es') ? (
+              <>
+              <button id="buy-btn" onClick={buyProduct} className="bg-[#FB823B] hover:bg-[#fa955a] scale-90 hover:scale-95 duration-100 text-white min-[320px]:w-[150px] xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:py-1 min-[320px]:justify-center min-[320px]:text-[20px] xl:text-base md:text-xs rounded-md flex min-[320px]:mx-auto md:mx-auto xl:mx-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"
+                      className="xl:w-4 xl:h-4 md:w-[0.7rem] md:h-[0.7rem] min-[320px]:w-[1rem] min-[320px]:h-[32px] my-auto mr-1">
+                  <path fillRule="evenodd"
+                    d="M6 5v1H4.667a1.75 1.75 0 0 0-1.743 1.598l-.826 9.5A1.75 1.75 0 0 0 3.84 19H16.16a1.75 1.75 0 0 0 1.743-1.902l-.826-9.5A1.75 1.75 0 0 0 15.333 6H14V5a4 4 0 0 0-8 0Zm4-2.5A2.5 2.5 0 0 0 7.5 5v1h5V5A2.5 2.5 0 0 0 10 2.5ZM7.5 10a2.5 2.5 0 0 0 5 0V8.75a.75.75 0 0 1 1.5 0V10a4 4 0 0 1-8 0V8.75a.75.75 0 0 1 1.5 0V10Z"
+                    clipRule="evenodd"/>
+                  </svg>
+                  Comprar
+                </button>
 
-            <button id="add-big-btn" onClick={addToCart} className="text-gray-500 hover:text-[#FB823B] scale-90 hover:scale-95 duration-100 xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:text-[12px] rounded-sm min-[320px]:hidden md:flex xl:text-base md:text-[8px] md:mx-auto">
-                Add to Cart
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="xl:w-5 xl:h-4 lg:w-4 md:w-[0.7rem] md:h-[0.7rem] my-auto ml-1">
-                    <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"/>
-                </svg>
-            </button>
-            <button id="add-small-btn" onClick={addToCart} className="text-gray-500 hover:text-[#FB823B] scale-90 hover:scale-95 duration-100  xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:flex min-[320px]:px-2 min-[320px]:py-1 min-[320px]:text-[20px] min-[320px]:justify-center min-[320px]:w-[150px]  rounded-full md:hidden xl:text-base md:text-xs min-[320px]:mx-auto md:mx-auto">
-            Add
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="xl:w-4 xl:h-4 lg:w-4 md:w-[0.7rem] md:h-[0.7rem] min-[320px]:w-4 min-[320px]:h-[32px] my-auto ml-1">
-                    <path
-                      d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
-                    />
-                </svg>
-            </button>
+                <button id="add-big-btn" onClick={addToCart} className="text-gray-500 hover:text-[#FB823B] scale-90 hover:scale-95 duration-100 xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:text-[12px] rounded-sm min-[320px]:hidden md:flex xl:text-base md:text-[8px] md:mx-auto">
+                    Agregar al Carro
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="xl:w-5 xl:h-4 lg:w-4 md:w-[0.7rem] md:h-[0.7rem] my-auto ml-1">
+                        <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"/>
+                    </svg>
+                </button>
+                <button id="add-small-btn" onClick={addToCart} className="text-gray-500 hover:text-[#FB823B] scale-90 hover:scale-95 duration-100 xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:flex min-[320px]:px-2 min-[320px]:py-1 min-[320px]:text-[20px] min-[320px]:justify-center min-[320px]:w-[170px]  rounded-full md:hidden xl:text-base md:text-xs min-[320px]:mx-auto md:mx-auto">
+                Agregar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="xl:size-4 lg:size-4 md:size-[0.7rem] min-[320px]:size-4 my-auto ml-1">
+                        <path
+                          d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
+                        />
+                    </svg>
+                </button> 
+              </>
+            ) : (
+              <>
+                <button id="buy-btn" onClick={buyProduct} className="bg-[#FB823B] hover:bg-[#fa955a] scale-90 hover:scale-95 duration-100 text-white min-[320px]:w-[150px] xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:py-1 min-[320px]:justify-center min-[320px]:text-[20px] xl:text-base md:text-xs rounded-md flex min-[320px]:mx-auto md:mx-auto xl:mx-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"
+                      className="xl:w-4 xl:h-4 md:w-[0.7rem] md:h-[0.7rem] min-[320px]:w-[1rem] min-[320px]:h-[32px] my-auto mr-1">
+                  <path fillRule="evenodd"
+                    d="M6 5v1H4.667a1.75 1.75 0 0 0-1.743 1.598l-.826 9.5A1.75 1.75 0 0 0 3.84 19H16.16a1.75 1.75 0 0 0 1.743-1.902l-.826-9.5A1.75 1.75 0 0 0 15.333 6H14V5a4 4 0 0 0-8 0Zm4-2.5A2.5 2.5 0 0 0 7.5 5v1h5V5A2.5 2.5 0 0 0 10 2.5ZM7.5 10a2.5 2.5 0 0 0 5 0V8.75a.75.75 0 0 1 1.5 0V10a4 4 0 0 1-8 0V8.75a.75.75 0 0 1 1.5 0V10Z"
+                    clipRule="evenodd"/>
+                  </svg>
+                  Buy
+                </button>
+
+                <button id="add-big-btn" onClick={addToCart} className="text-gray-500 hover:text-[#FB823B] scale-90 hover:scale-95 duration-100 xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:px-2 min-[320px]:text-[12px] rounded-sm min-[320px]:hidden md:flex xl:text-base md:text-[8px] md:mx-auto">
+                    Add to Cart
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="xl:w-5 xl:h-4 lg:w-4 md:w-[0.7rem] md:h-[0.7rem] my-auto ml-1">
+                        <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"/>
+                    </svg>
+                </button>
+                <button id="add-small-btn" onClick={addToCart} className="text-gray-500 hover:text-[#FB823B] scale-90 hover:scale-95 duration-100  xl:px-5 xl:py-2 lg:px-5 lg:py-2 md:px-2 md:py-1 min-[320px]:flex min-[320px]:px-2 min-[320px]:py-1 min-[320px]:text-[20px] min-[320px]:justify-center min-[320px]:w-[150px]  rounded-full md:hidden xl:text-base md:text-xs min-[320px]:mx-auto md:mx-auto">
+                Add
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="xl:w-4 xl:h-4 lg:w-4 md:w-[0.7rem] md:h-[0.7rem] min-[320px]:w-4 min-[320px]:h-[32px] my-auto ml-1">
+                        <path
+                          d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
+                        />
+                    </svg>
+                </button> 
+              </>
+            )}
+            
 
             {/* More buttons */}
           </div>

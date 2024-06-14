@@ -104,8 +104,6 @@ const PayPal: React.FC = () => {
         })),
       };
 
-      console.log(shippingAddress.phone)
-
       // Enviar los datos de la orden a la API
       try {
         const response = await fetch( process.env.NEXT_PUBLIC_API_URL + "order/create", {
@@ -118,7 +116,8 @@ const PayPal: React.FC = () => {
         
         if (response.ok) {
           console.log("Orden creada exitosamente");
-          
+          window.location.href = "/successfullpayment";
+          localStorage.removeItem('cart');
         } else {
           console.error("Error al crear la orden");
           setShowAlert(true);

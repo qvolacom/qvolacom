@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../app/styles/fonts.css'
+import { LanguageContext } from '../context/LanguageContext';
 
 interface CardProps {
   title?: string;
@@ -10,7 +11,11 @@ interface CardProps {
   sku?: string;
 }
 
+
 const Card: React.FC<CardProps> = ({ title, description, linkedto, image, price, sku }) => {
+  const { language, toggleLanguage } = useContext(LanguageContext);
+
+
   return (
     <section
       className="sm:max-w-64 bg-white border-1 border-black shadow-red-400 sm:min-w-[270px] min-[320px]:max-w-44 min-[320px]:min-w-44 sm:max-h-auto sm:min-h-96 min-[320px]:min-h-[264px] rounded-lg overflow-hidden shadow-md card"
@@ -63,14 +68,30 @@ const Card: React.FC<CardProps> = ({ title, description, linkedto, image, price,
         className="flex flex-row justify-center text-white cursor-pointer bg-[#FB823B] focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg px-5 py-2.5 text-center items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-95 scale-90 gap-x-2 opacity-90 hover:opacity-100"
       >
         {/* Bigger Screens Button Text */}
-        <span id="btn-standart" className="min-[320px]:hidden sm:inline bigLink">
-          Explore
-        </span>
+        {language.startsWith('es') ? (
+          <span id="btn-standart" className="min-[320px]:hidden sm:inline bigLink">
+            Explorar
+          </span>
+        ) : (
+          <span id="btn-standart" className="min-[320px]:hidden sm:inline bigLink">
+            Explore
+          </span>
+        )}
+        
 
         {/* Mobile Button Text */}
-        <span id="btn-small" className="sm:hidden min-[320px]:inline text-xs text-center smallLink">
-          Explore
-        </span>
+
+        {language.startsWith('es') ? (
+          <span id="btn-small" className="sm:hidden min-[320px]:inline text-xs text-center smallLink">
+            Explorar
+          </span>
+        ):(
+          <span id="btn-small" className="sm:hidden min-[320px]:inline text-xs text-center smallLink">
+            Explore
+          </span>
+        )}
+
+        
 
         {/* Button Icon */}
         <svg

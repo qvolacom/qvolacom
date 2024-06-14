@@ -9,23 +9,15 @@ export default function Home() {
 
     return (
         <main>
-            <NavBar></NavBar>
-            <section className=''>
-                <div className='w-full bg-[#FB823B]'>
-                    <h1 className='text-white text-4xl text-center my-20'>Payment Details</h1>
-                </div>
-                <div className='flex justify-center items-center h-[500px] '>
-                    <div className='justify-center items-center my-auto h-full flex'>
-                        <div className='w-96'>
+            <section className=' bg-no-repeat bg-center'> {/*bg-[url("../../public/images/isologo.png")]*/}
+                <div className='flex justify-center items-center h-screen '>
+                    <div className='justify-center items-center h-full flex'>
+                        <div className='md:w-96 min-[320px]:w-80 min-[320px]:mt-48 md:block'>
                             <PayPal></PayPal> 
                         </div>
-                       
-                    </div>
-                    
+                    </div> 
                 </div>
-                
             </section>
-            <Footer></Footer>
         </main>
     );
 };

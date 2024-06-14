@@ -2,10 +2,15 @@ import '../app/styles/fonts.css'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer';
 import CategoryLayout from '../app/layouts/CategoryLayout';
-import Slider from '../components/Slider'
-import Head from 'next/head';
+import Slider from '../components/Slider';
+
+export const metadata = {
+  title: "Quevolacom",
+  description: "Welcome to Quevolacom.com home page",
+};
 
 export default function Home() {
+
   return (
     <main>
       <NavBar></NavBar>

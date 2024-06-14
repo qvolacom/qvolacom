@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import isologo from '../../public/images/isologo.png';
 import ModalAlert from '../components/ModalAlert';
+import { LanguageContext } from '../context/LanguageContext';
+import usFlag from '../../public/us.svg';
+import esFlag from '../../public/es.svg';
+
 
 import '../app/styles/fonts.css';
 
@@ -15,6 +19,8 @@ const NavBar: React.FC = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
+  const { language, toggleLanguage } = useContext(LanguageContext);
+  
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -23,6 +29,10 @@ const NavBar: React.FC = () => {
   };
 
   useEffect(() => {
+
+    
+
+
     const updateList = () => {
       const storedArray = localStorage.getItem('cart');
       if (storedArray) {
@@ -44,6 +54,8 @@ const NavBar: React.FC = () => {
     const handleClick = () => {
       updateList();
     };
+
+    
 
     const handleScroll = () => {
       const navbar = document.getElementById('navbar');
@@ -109,11 +121,21 @@ const NavBar: React.FC = () => {
           <span className="text-[#ffffff] font-semibold text-xl">Vola.Com</span>
         </Link>
         <div className="md:flex items-center space-x-7">
-          <Link href="/" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Home</Link>
-          <Link href="/category" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Category</Link>
-          <Link href="/products" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Products</Link>
-          <Link href="/contact" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Contact-us</Link>
-          
+            {language.startsWith('es') ? (
+            <>
+            <Link href="/" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Inicio</Link>
+            <Link href="/category" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Categorias</Link>
+            <Link href="/products" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Productos</Link>
+            <Link href="/contact" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Contacto</Link>
+            </>
+          ) : (
+            <>
+            <Link href="/" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Home</Link>
+            <Link href="/category" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Category</Link>
+            <Link href="/products" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Products</Link>
+            <Link href="/contact" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Contact-us</Link>
+            </>
+          )}
           <div className="absolute md:block min-[320px]:top-[30px] min-[320px]:right-[260px] min-[321px]:top-[30px] min-[321px]:right-[70px] md:right-[20px] lg:right-16 xl:right-20">
             <button onClick={toggleCart} className="">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-6">
@@ -134,7 +156,17 @@ const NavBar: React.FC = () => {
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="md:size-6 min-[320px]:size-5 my-auto">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                   </svg>
-                  <h1 className="text-[#161616] font-semibold min-[320px]:font-bold min-[320px]:text-sm md:text-xl">Shopping Cart</h1>
+                  {language.startsWith('es') ? (
+                    <>
+                    <h1 className="text-[#161616] font-semibold min-[320px]:font-bold min-[320px]:text-sm md:text-xl">Carrito de Compras</h1>
+                    </>
+                  ):(
+                    <>
+                    <h1 className="text-[#161616] font-semibold min-[320px]:font-bold min-[320px]:text-sm md:text-xl">Shopping Cart</h1>
+                    
+                    </>
+                  )}
+                  
                   <svg onClick={toggleCart} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="gray" className="md:size-6 min-[320px]:size-5 absolute right-2 top-3 my-auto hover:rotate-90 hover:stroke-gray-600 hover:cursor-pointer transition-transform">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                   </svg>
@@ -159,12 +191,31 @@ const NavBar: React.FC = () => {
                 </div>
         
                 <div className="h-[100px]">
-                  <button id="cart-buy-now" onClick={buyNowcart} className="bg-[#FB823B] my-2 w-64 h-[48px] rounded-sm text-white hover:bg-[#fd9559] duration-75">Buy Now</button>
+                  <button id="cart-buy-now" onClick={buyNowcart} className="bg-[#FB823B] my-2 w-64 h-[48px] rounded-sm text-white hover:bg-[#fd9559] duration-75">
+                  {language.startsWith('es') ? (
+                    <>
+                    Comprar Ahora
+                    </>
+                  ):(
+                    <>
+                    Buy Now
+                    </>
+                  )}
+                  </button>
                   <button id="continue-cart" onClick={toggleCart} className="text-gray-500 hover:text-gray-800 group transition-colors flex justify-center text-center flex-wrap mx-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="gray" className="size-5 my-auto group-hover:stroke-gray-700 transition-colors">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                     </svg>
+                    {language.startsWith('es') ? (
+                    <>
+                    Continuar Comprando
+                    </>
+                  ):(
+                    <>
                     Continue buying
+                    </>
+                  )}
+                    
                   </button>
                 </div>
               </div>
@@ -180,18 +231,46 @@ const NavBar: React.FC = () => {
       </div>
       {menuVisible && (
         <div className="md:hidden flex flex-col items-center space-y-4 mt-4 bg-[#161616] border-y-2 border-black py-2">
-          <Link href="/" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Home</Link>
-          <Link href="/category" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Category</Link>
-          <Link href="/products" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Products</Link>
-          <Link href="/contact" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Contact-us</Link>
+          {language.startsWith('es') ? (
+              <>
+              <Link href="/" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Inicio</Link>
+              <Link href="/category" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Categorias</Link>
+              <Link href="/products" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Productos</Link>
+              <Link href="/contact" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Contacto</Link>
+              </>
+            ):(
+              <>
+              <Link href="/" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Home</Link>
+              <Link href="/category" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Category</Link>
+              <Link href="/products" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Products</Link>
+              <Link href="/contact" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base">Contact-us</Link>
+              
+              </>
+            )}
+          
         </div>
       )}
       <div>
-      {showAlert && <ModalAlert message="Your shopping cart is currently empty. Why not explore our selection of products and add some items? We're sure you'll find something you like!" onClose={handleClose} />}
-      <div className={showAlert ? 'pointer-events-none' : ''}>
-        {/* Aquí va el resto del contenido de tu aplicación */}
-      </div>
+      {language.startsWith('es') ? (
+        <>
+          {showAlert && <ModalAlert message="Su carrito está vacío. ¿Por qué no explorar nuestra selección de productos y agrega algunos artículos? ¡Estamos seguros de que encontrarás algo que te guste!" onClose={handleClose} />}
+          <div className={showAlert ? 'pointer-events-none' : ''}>
+            {/* Aquí va el resto del contenido de tu aplicación */}
+          </div>
+        </>
+      ):( 
+        <>
+          {showAlert && <ModalAlert message="Your shopping cart is currently empty. Why not explore our selection of products and add some items? We're sure you'll find something you like!" onClose={handleClose} />}
+          <div className={showAlert ? 'pointer-events-none' : ''}>
+            {/* Aquí va el resto del contenido de tu aplicación */}
+          </div>
+        </>
+      )}
     </div>
+
+      <button onClick={toggleLanguage} className="mb-4 px-2 py-1 text-[#ffffff] bg-[#212121] border-white shadow-sm border z-10 min-[320px]:right-10 right-32 rounded absolute">
+              {language === 'es' ? <Image src={usFlag} alt={'English'} className='size-4 hover:size-5 duration-75'></Image> : <Image src={esFlag} alt={'English'} className='size-4 hover:size-5 duration-75'></Image>}
+      </button>
     </nav>
   );
 };
