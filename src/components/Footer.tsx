@@ -1,6 +1,6 @@
 "use client"
 import React, { useContext, useEffect, useState } from "react";
-import isologo from "../../public/images/isologo.png";
+import isologo from "../../public/favicon.svg";
 import Image from 'next/image';
 import { LanguageContext } from '../context/LanguageContext';
 

@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import isologo from '../../public/images/isologo.png';
+import isologo from '../../public/favicon.svg';
 import ModalAlert from '../components/ModalAlert';
 import { LanguageContext } from '../context/LanguageContext';
 import usFlag from '../../public/us.svg';
@@ -136,6 +136,11 @@ const NavBar: React.FC = () => {
             <Link href="/contact" className="hover:text-[#FB823B] text-[#ffffff] duration-75 hover:underline lg:text-base min-[320px]:hidden md:flex md:text-[10px]">Contact-us</Link>
             </>
           )}
+
+          <button onClick={toggleLanguage} className="px-2 py-1 text-[#ffffff] min-[320px]:hidden min-[769px]:block">
+              {language === 'es' ? <Image src={usFlag} alt={'English'} className='size-5 hover:size-[21px] cursor-pointer duration-75'></Image> : <Image src={esFlag} alt={'English'} className='size-5 hover:size-[21px] duration-75'></Image>}
+          </button>
+
           <div className="absolute md:block min-[320px]:top-[30px] min-[320px]:right-[260px] min-[321px]:top-[30px] min-[321px]:right-[70px] md:right-[20px] lg:right-16 xl:right-20">
             <button onClick={toggleCart} className="">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-6">
@@ -247,7 +252,9 @@ const NavBar: React.FC = () => {
               
               </>
             )}
-          
+          <button onClick={toggleLanguage} className="px-2 py-1 text-[#ffffff]">
+              {language === 'es' ? <Image src={usFlag} alt={'English'} className='size-5 hover:size-[21px] cursor-pointer duration-75'></Image> : <Image src={esFlag} alt={'English'} className='size-5 hover:size-[21px] duration-75'></Image>}
+          </button>
         </div>
       )}
       <div>
@@ -268,9 +275,6 @@ const NavBar: React.FC = () => {
       )}
     </div>
 
-      <button onClick={toggleLanguage} className="mb-4 px-2 py-1 text-[#ffffff] bg-[#212121] shadow-sm z-10 min-[320px]:right-10 right-32 rounded absolute">
-              {language === 'es' ? <Image src={usFlag} alt={'English'} className='size-4 hover:size-5 duration-75'></Image> : <Image src={esFlag} alt={'English'} className='size-4 hover:size-5 duration-75'></Image>}
-      </button>
     </nav>
   );
 };

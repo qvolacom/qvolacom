@@ -17,7 +17,6 @@ export default function Home() {
       <NavBar></NavBar>
       <Slider></Slider>
       <CategoryLayout></CategoryLayout>
-      <Stripe></Stripe>
       <Footer></Footer>
     </main>
   );
