@@ -268,7 +268,7 @@ const NavBar: React.FC = () => {
       )}
     </div>
 
-      <button onClick={toggleLanguage} className="mb-4 px-2 py-1 text-[#ffffff] bg-[#212121] border-white shadow-sm border z-10 min-[320px]:right-10 right-32 rounded absolute">
+      <button onClick={toggleLanguage} className="mb-4 px-2 py-1 text-[#ffffff] bg-[#212121] shadow-sm z-10 min-[320px]:right-10 right-32 rounded absolute">
               {language === 'es' ? <Image src={usFlag} alt={'English'} className='size-4 hover:size-5 duration-75'></Image> : <Image src={esFlag} alt={'English'} className='size-4 hover:size-5 duration-75'></Image>}
       </button>
     </nav>
